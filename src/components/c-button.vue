@@ -1,16 +1,17 @@
+<template>
+    <button :type="this.buttonType" @click="(e) => e.preventDefault()">{{ textContent }}</button>
+</template>
+
 <script>
 export default {
     name: "c-button",
 
     props: {
         textContent: { type: String },
+        buttonType: { type: String },
     },
 };
 </script>
-
-<template>
-    <button type="button">{{ textContent }}</button>
-</template>
 
 <style>
 button {

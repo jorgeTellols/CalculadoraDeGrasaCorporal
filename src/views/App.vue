@@ -1,13 +1,3 @@
-<script>
-import WBodyFatCalculator from "../widgets/w-body-fat-calculator.vue";
-
-export default {
-  components: {
-    WBodyFatCalculator,
-  }
-}
-</script>
-
 <template>
   <div class="flex flex-col justify-center items-center h-screen text-2xl py-20">
     <div class="title-container">
@@ -18,6 +8,16 @@ export default {
     </div>
   </div>
 </template>
+
+<script>
+import WBodyFatCalculator from "../widgets/w-body-fat-calculator.vue";
+
+export default {
+  components: {
+    WBodyFatCalculator,
+  }
+}
+</script>
 
 <style>
 html {

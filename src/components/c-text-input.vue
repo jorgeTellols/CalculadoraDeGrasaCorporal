@@ -1,14 +1,3 @@
-<script>
-export default {
-    name: "c-text-input",
-
-    props: {
-        labelContent: { type: String },
-        placeholderContent: { type: String },
-    },
-};
-</script>
-
 <template>
     <div class="flex-row">
         <div class="label">
@@ -19,6 +8,17 @@ export default {
         </div>
     </div>
 </template>
+
+<script>
+export default {
+    name: "c-text-input",
+
+    props: {
+        labelContent: { type: String },
+        placeholderContent: { type: String },
+    },
+};
+</script>
 
 <style>
 .placeholder-right::placeholder {
