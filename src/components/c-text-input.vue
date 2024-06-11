@@ -26,7 +26,6 @@ export default {
     margin-right: 5px;
 }
 
-/* Ensure the user input is aligned left */
 .placeholder-right {
     text-align: left;
 }
