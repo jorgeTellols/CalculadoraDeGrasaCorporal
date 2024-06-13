@@ -1,10 +1,10 @@
 <template>
-    <div class="flex-row">
-        <div class="label">
-            <label>{{ labelContent }}</label>
+    <div>
+        <div v-if="labelContent !== ''" class="label">
+            <label class="whitespace-nowrap">{{ labelContent }}</label>
         </div>
         <div class="input-box mt-2 border-2 border-black">
-            <input class="placeholder-right" :placeholder=placeholderContent type="text" />
+            <input class="w-full placeholder-right" :placeholder=placeholderContent type="text" />
         </div>
     </div>
 </template>
@@ -26,7 +26,8 @@ export default {
     margin-right: 5px;
 }
 
-.placeholder-right {
-    text-align: left;
+input:focus {
+
+    outline: 0;
 }
 </style>
