@@ -21,9 +21,13 @@ export default {
 </script>
 
 <style>
-.placeholder-right::placeholder {
+input::placeholder {
     text-align: right;
     margin-right: 5px;
+}
+
+input {
+    text-align: right
 }
 
 input:focus {
