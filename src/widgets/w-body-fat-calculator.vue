@@ -1,114 +1,129 @@
 <template>
-    <form class="widget-container relative flex-row">
-        <div class="male-female-container flex flex-row">
-            <div class="male-container">
-                <CGenderSelect :showMaleCalculator="true" :isMaleSelected="this.isMale"
-                    @handleClickMale="handleClickMale" />
+    <div class="widget-container flex ">
+        <form class="form-container relative flex-row mr-28">
+            <div class="male-female-container flex flex-row">
+                <div class="male-container">
+                    <CGenderSelect :showMaleCalculator="true" :isMaleSelected="this.isMale"
+                        @handleClickMale="handleClickMale" />
+                </div>
+                <div :class="['female-container', { 'move-female-container ': this.isMale }]">
+                    <CGenderSelect :showMaleCalculator="false" :isMaleSelected="this.isMale"
+                        @handleClickFemale="handleClickFemale" />
+                </div>
             </div>
-            <div :class="['female-container', { 'move-female-container ': this.isMale }]">
-                <CGenderSelect :showMaleCalculator="false" :isMaleSelected="this.isMale"
-                    @handleClickFemale="handleClickFemale" />
+            <div v-if="this.isMale"
+                class="calculator-container flex-row bg-white p-3 border-gray-600 border-2 relative">
+
+                <div v-if="(this.placeHolderContent == 'cm')" class="input-fields w-full">
+                    <CTextInput class="pb-2" labelContent="Altura" placeholderContent="cm" @change="setHeight" />
+                    <CTextInput class="pb-2" labelContent="Circunferencia de cuello" placeholderContent="cm"
+                        @change="setNeck" />
+                    <CTextInput class="pb-2" labelContent="Circunferencia de cintura" placeholderContent="cm"
+                        @change="setWaist" />
+                </div>
+
+                <div v-else class="input-fields">
+                    <div class="flex">
+                        <CTextInput class="w-1/2 absolute" labelContent="Altura" placeholderContent="feet"
+                            @change="setHeightFeet" />
+                        <CTextInput class="mt-8 ml-36 pb-2 w-1/2" labelContent="" placeholderContent="inches"
+                            @change="setHeightInches" />
+                    </div>
+                    <div class="flex">
+                        <CTextInput class="w-1/2 absolute" labelContent="Circunferencia de cuello"
+                            placeholderContent="feet" @change="setNeckFeet" />
+                        <CTextInput class="mt-8 ml-36 pb-2 w-1/2" labelContent="" placeholderContent="inches"
+                            @change="setNeckInches" />
+                    </div>
+                    <div class="flex">
+                        <CTextInput class=" w-1/2 absolute" labelContent="Circunferencia de cintura"
+                            placeholderContent="feet" @change="setWaistFeet" />
+                        <CTextInput class="mt-8 ml-36 pb-2 w-1/2" labelContent="" placeholderContent="inches"
+                            @change="setWaistInches" />
+                    </div>
+                </div>
+
+                <div class="flex radio-container">
+                    <CRadio radioTextContent="  Métrico" :isChecked="isMetricSelected" class="m-5 ml-0"
+                        @handleRadioChange="handleMetricRadio" />
+                    <CRadio radioTextContent="  Imperial" :isChecked="isImperialSelected" class="m-5 ml-0"
+                        @handleRadioChange="handleImperialRadio" />
+                </div>
+                <div class="pt-5 text-center button">
+                    <CButton buttonType="submit" textContent="Calcular" @click="verificateData" />
+                </div>
             </div>
+            <div v-else-if="!this.isMale"
+                class="calculator-container flex-row bg-white p-3 border-gray-600 border-2 relative">
+
+                <div v-if="(this.placeHolderContent == 'cm')" class="input-fields">
+                    <CTextInput class="pb-2" labelContent="Altura" :placeholderContent="this.placeHolderContent"
+                        @change="setHeight" />
+                    <CTextInput class="pb-2" labelContent="Circunferencia de cuello"
+                        :placeholderContent="this.placeHolderContent" @change="setNeck" />
+                    <CTextInput class="pb-2" labelContent="Circunferencia de cintura"
+                        :placeholderContent="this.placeHolderContent" @change="setWaist" />
+                    <CTextInput class="pb-2" labelContent="Circunferencia de cadera"
+                        :placeholderContent="this.placeHolderContent" @change="setHip" />
+                </div>
+
+                <div v-else class="input-fields">
+                    <div class="flex">
+                        <CTextInput class="w-1/2 absolute" labelContent="Altura" placeholderContent="feet"
+                            @change="setHeightFeet" />
+                        <CTextInput class="mt-8 ml-36 pb-2 w-1/2" labelContent="" placeholderContent="inches"
+                            @change="setHeightInches" />
+                    </div>
+                    <div class="flex">
+                        <CTextInput class="w-1/2 absolute" labelContent="Circunferencia de cuello"
+                            placeholderContent="feet" @change="setNeckFeet" />
+                        <CTextInput class="mt-8 ml-36 pb-2 w-1/2" labelContent="" placeholderContent="inches"
+                            @change="setNeckInches" />
+                    </div>
+                    <div class="flex">
+                        <CTextInput class=" w-1/2 absolute" labelContent="Circunferencia de cintura"
+                            placeholderContent="feet" @change="setWaistFeet" />
+                        <CTextInput class="mt-8 ml-36 pb-2 w-1/2" labelContent="" placeholderContent="inches"
+                            @change="setWaistInches" />
+                    </div>
+                    <div class="flex">
+                        <CTextInput class=" w-1/2 absolute" labelContent="Circunferencia de cadera"
+                            placeholderContent="feet" @change="setHipFeet" />
+                        <CTextInput class="mt-8 ml-36 pb-2 w-1/2" labelContent="" placeholderContent="inches"
+                            @change="setHipInches" />
+                    </div>
+                </div>
+
+                <div class="flex radio-container">
+                    <CRadio radioTextContent="  Métrico" :isChecked="isMetricSelected" class="m-5 ml-0"
+                        @handleRadioChange="handleMetricRadio" />
+                    <CRadio radioTextContent="  Imperial" :isChecked="isImperialSelected" class="m-5 ml-0"
+                        @handleRadioChange="handleImperialRadio" />
+                </div>
+                <div class="pt-5 text-center button">
+                    <CButton buttonType="submit" textContent="Calcular" @click="verificateData" />
+                </div>
+            </div>
+        </form>
+        <div class="help-container flex-col justify-center align-middle">
+            <div v-if="!this.isBfCalculated && !this.isThereError"
+                class="result-container font-normal flex text-center justify-center align-middle mt-48">
+                <CLabel :spanContent="' 🤔 Introduzca sus datos 🤔'" />
+            </div>
+            <div v-else-if="this.isBfCalculated"
+                class="result-container font-normal flex text-center justify-center align-middle  mt-48">
+                <CLabel :spanContent="`Su porcentaje de grasa corporal es: ${bfPercentage}`" optionalSymbol="% ☝️🤓" />
+            </div>
+            <div v-else-if="this.isThereError"
+                class="result-container font-normal text-center flex justify-center align-middle  mt-48">
+                <CLabel :spanContent="`${errorContent} ⛔`" />
+            </div>
+
+            <!-- <div class="image-container">
+                <img class="example-image border-2 border-black" src="../assets/man.jpg" />
+            </div> -->
         </div>
-        <div v-if="this.isMale" class="calculator-container flex-row bg-white p-3 border-gray-600 border-2 relative">
-
-            <div v-if="(this.placeHolderContent == 'cm')" class="input-fields w-full">
-                <CTextInput class="pb-2" labelContent="Altura" placeholderContent="cm" @change="setHeight" />
-                <CTextInput class="pb-2" labelContent="Circunferencia de cuello" placeholderContent="cm"
-                    @change="setNeck" />
-                <CTextInput class="pb-2" labelContent="Circunferencia de cintura" placeholderContent="cm"
-                    @change="setWaist" />
-            </div>
-
-            <div v-else class="input-fields">
-                <div class="flex">
-                    <CTextInput class="w-1/2 absolute" labelContent="Altura" placeholderContent="feet"
-                        @change="setHeightFeet" />
-                    <CTextInput class="mt-8 ml-36 pb-2 w-1/2" labelContent="" placeholderContent="inches"
-                        @change="setHeightInches" />
-                </div>
-                <div class="flex">
-                    <CTextInput class="w-1/2 absolute" labelContent="Circunferencia de cuello" placeholderContent="feet"
-                        @change="setNeckFeet" />
-                    <CTextInput class="mt-8 ml-36 pb-2 w-1/2" labelContent="" placeholderContent="inches"
-                        @change="setNeckInches" />
-                </div>
-                <div class="flex">
-                    <CTextInput class=" w-1/2 absolute" labelContent="Circunferencia de cintura"
-                        placeholderContent="feet" @change="setWaistFeet" />
-                    <CTextInput class="mt-8 ml-36 pb-2 w-1/2" labelContent="" placeholderContent="inches"
-                        @change="setWaistInches" />
-                </div>
-            </div>
-
-            <div class="flex radio-container">
-                <CRadio radioTextContent="  Métrico" :isChecked="isMetricSelected" class="m-5 ml-0"
-                    @handleRadioChange="handleMetricRadio" />
-                <CRadio radioTextContent="  Imperial" :isChecked="isImperialSelected" class="m-5 ml-0"
-                    @handleRadioChange="handleImperialRadio" />
-            </div>
-            <div class="pt-5 text-center button">
-                <CButton buttonType="submit" textContent="Calcular" @click="verificateData" />
-            </div>
-        </div>
-        <div v-else-if="!this.isMale"
-            class="calculator-container flex-row bg-white p-3 border-gray-600 border-2 relative">
-
-            <div v-if="(this.placeHolderContent == 'cm')" class="input-fields">
-                <CTextInput class="pb-2" labelContent="Altura" :placeholderContent="this.placeHolderContent"
-                    @change="setHeight" />
-                <CTextInput class="pb-2" labelContent="Circunferencia de cuello"
-                    :placeholderContent="this.placeHolderContent" @change="setNeck" />
-                <CTextInput class="pb-2" labelContent="Circunferencia de cintura"
-                    :placeholderContent="this.placeHolderContent" @change="setWaist" />
-                <CTextInput class="pb-2" labelContent="Circunferencia de cadera"
-                    :placeholderContent="this.placeHolderContent" @change="setHip" />
-            </div>
-
-            <div v-else class="input-fields">
-                <div class="flex">
-                    <CTextInput class="w-1/2 absolute" labelContent="Altura" placeholderContent="feet"
-                        @change="setHeightFeet" />
-                    <CTextInput class="mt-8 ml-36 pb-2 w-1/2" labelContent="" placeholderContent="inches"
-                        @change="setHeightInches" />
-                </div>
-                <div class="flex">
-                    <CTextInput class="w-1/2 absolute" labelContent="Circunferencia de cuello" placeholderContent="feet"
-                        @change="setNeckFeet" />
-                    <CTextInput class="mt-8 ml-36 pb-2 w-1/2" labelContent="" placeholderContent="inches"
-                        @change="setNeckInches" />
-                </div>
-                <div class="flex">
-                    <CTextInput class=" w-1/2 absolute" labelContent="Circunferencia de cintura"
-                        placeholderContent="feet" @change="setWaistFeet" />
-                    <CTextInput class="mt-8 ml-36 pb-2 w-1/2" labelContent="" placeholderContent="inches"
-                        @change="setWaistInches" />
-                </div>
-                <div class="flex">
-                    <CTextInput class=" w-1/2 absolute" labelContent="Circunferencia de cadera"
-                        placeholderContent="feet" @change="setHipFeet" />
-                    <CTextInput class="mt-8 ml-36 pb-2 w-1/2" labelContent="" placeholderContent="inches"
-                        @change="setHipInches" />
-                </div>
-            </div>
-
-            <div class="flex radio-container">
-                <CRadio radioTextContent="  Métrico" :isChecked="isMetricSelected" class="m-5 ml-0"
-                    @handleRadioChange="handleMetricRadio" />
-                <CRadio radioTextContent="  Imperial" :isChecked="isImperialSelected" class="m-5 ml-0"
-                    @handleRadioChange="handleImperialRadio" />
-            </div>
-            <div class="pt-5 text-center button">
-                <CButton buttonType="submit" textContent="Calcular" @click="verificateData" />
-            </div>
-        </div>
-        <div v-if="this.isBfCalculated" class="result-container mt-10 font-normal absolute text-center">
-            <CLabel :spanContent="`Su porcentaje de grasa corporal es: ${bfPercentage}`" optionalSymbol="%" />
-        </div>
-        <div v-else-if="this.isThereError" class="result-container mt-10 font-normal absolute text-center">
-            <CLabel :spanContent="`${errorContent}`" />
-        </div>
-    </form>
+    </div>
 </template>
 
 <script>
@@ -160,9 +175,9 @@ export default {
             isBfCalculated: false,
             isThereError: false,
             isMale: true,
-            isMetricSelected: false,
-            isImperialSelected: true,
-            placeHolderContent: "feet",
+            isMetricSelected: true,
+            isImperialSelected: false,
+            placeHolderContent: "cm",
             heightFeet: 0,
             heightInches: 0,
             neckFeet: 0,
@@ -241,16 +256,18 @@ export default {
 
         verificateData() {
 
-            this.computedHeigth;
-            this.computedNeck;
-            this.computedWaist;
-            this.computedHip;
+            if (!this.isMetricSelected) {
+                this.computedHeigth;
+                this.computedNeck;
+                this.computedWaist;
+                this.computedHip;
+            }
 
             if (this.isMale) {
                 if (((this.height) == 0) || ((this.neckCircumference) == 0) || ((this.waistCircumference) == 0)) {
                     this.isBfCalculated = false;
                     this.isThereError = true;
-                    this.errorContent = "Todos los campos deben estar llenos"
+                    this.errorContent = "Todos los campos deben estar llenos correctamente"
                     this.cleanData();
                 }
                 else {
@@ -345,5 +362,9 @@ export default {
 
 .move-female-container {
     margin-left: 32%;
+}
+
+.help-container {
+    width: 300px;
 }
 </style>
