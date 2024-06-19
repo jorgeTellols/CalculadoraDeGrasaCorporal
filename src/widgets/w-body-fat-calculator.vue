@@ -1,7 +1,7 @@
 <template>
     <div class="widget-container flex ">
         <form class="form-container relative flex-row mr-28">
-            <div class="male-female-container flex flex-row">
+            <div class="male-female-container flex">
                 <div class="male-container">
                     <CGenderSelect :showMaleCalculator="true" :isMaleSelected="this.isMale"
                         @handleClickMale="handleClickMale" />
@@ -9,6 +9,11 @@
                 <div :class="['female-container', { 'move-female-container ': this.isMale }]">
                     <CGenderSelect :showMaleCalculator="false" :isMaleSelected="this.isMale"
                         @handleClickFemale="handleClickFemale" />
+                </div>
+                <div :class="['help-modal-container', 'flex', { 'help-modal-container-woman-selected': !this.isMale }]">
+                    <h1 @click="showModal = true"><img class="w-8 h-8" src="../assets/incognito.png" /></h1>
+                    <MHelpModal class="help-modal" :visible="showModal" @close="showModal = false">
+                    </MHelpModal>
                 </div>
             </div>
             <div v-if="this.isMale"
@@ -108,15 +113,21 @@
         <div class="help-container flex-col justify-center align-middle">
             <div v-if="!this.isBfCalculated && !this.isThereError"
                 class="result-container font-normal flex text-center justify-center align-middle mt-48">
-                <CLabel :spanContent="' 🤔 Introduzca sus datos 🤔'" />
+                <CLabel class="flex justify-center -ml-72 absolute" :spanContent="`🤔`" />
+                <CLabel :spanContent="'Introduzca sus datos'" />
+                <CLabel class="flex justify-center -mr-72 absolute" :spanContent="`🤔`" />
             </div>
             <div v-else-if="this.isBfCalculated"
-                class="result-container font-normal flex text-center justify-center align-middle  mt-48">
-                <CLabel :spanContent="`Su porcentaje de grasa corporal es: ${bfPercentage}`" optionalSymbol="% ☝️🤓" />
+                class="result-container font-normal flex text-center justify-center align-middle mt-48 relative">
+                <CLabel class="justify-center align-middle mt-4 -ml-80 absolute" :spanContent="`☝️🤓`" />
+                <CLabel :spanContent="`Su porcentaje de grasa corporal es: ${bfPercentage}`" optionalSymbol="%" />
+                <CLabel class="justify-center align-middle mt-4 -mr-80 absolute" :spanContent="`☝️🤓`" />
             </div>
             <div v-else-if="this.isThereError"
-                class="result-container font-normal text-center flex justify-center align-middle  mt-48">
-                <CLabel :spanContent="`${errorContent} ⛔`" />
+                class="result-container font-normal text-center flex justify-center align-middle mt-48">
+                <CLabel class="flex justify-center align-middle mt-4 -ml-80 absolute" :spanContent="`⛔`" />
+                <CLabel :spanContent="`${errorContent}`" />
+                <CLabel class="flex justify-center mt-4 -mr-80 absolute" :spanContent="`⛔`" />
             </div>
 
             <!-- <div class="image-container">
@@ -132,7 +143,7 @@ import CTextInput from "../components/c-text-input.vue"
 import CLabel from "../components/c-label.vue";
 import CRadio from "../components/c-radio.vue";
 import CGenderSelect from "../components/c-gender-select.vue"
-import { computed } from "vue";
+import MHelpModal from "../modals/m-help-modal.vue"
 
 export default {
     name: "w-body-fat-calculator",
@@ -143,6 +154,7 @@ export default {
         CLabel,
         CGenderSelect,
         CRadio,
+        MHelpModal,
     },
 
     computed: {
@@ -186,6 +198,7 @@ export default {
             waistInches: 0,
             hipFeet: 0,
             hipInches: 0,
+            showModal: false,
         };
     },
 
@@ -274,7 +287,7 @@ export default {
                     if (isNaN(this.height) || isNaN(this.neckCircumference) || isNaN(this.waistCircumference)) {
                         this.isBfCalculated = false;
                         this.isThereError = true;
-                        this.errorContent = "Solo puedes introducir números"
+                        this.errorContent = "Solo puede introducir números"
                         this.cleanData();
                     }
                     else {
@@ -317,7 +330,7 @@ export default {
             if ((this.bfPercentage <= 0) || (isNaN(this.bfPercentage)) || (this.bfPercentage >= 100)) {
                 this.isBfCalculated = false;
                 this.isThereError = true;
-                this.errorContent = "Error de calculo. Asegurese de que los datos introducidos son correctos."
+                this.errorContent = "Resultado inverosímil. Introduzca otros datos."
                 this.cleanData();
             }
             else {
@@ -330,11 +343,13 @@ export default {
         handleClickMale() {
             this.isMale = true;
             this.isBfCalculated = false;
+            this.cleanData();
         },
 
         handleClickFemale() {
             this.isMale = false;
             this.isBfCalculated = false;
+            this.cleanData();
         },
 
         handleMetricRadio(e) {
@@ -356,6 +371,7 @@ export default {
 .calculator-container {
     border-radius: 2%;
     border-top-left-radius: 0%;
+    border-top-right-radius: 0%;
     z-index: 1;
     width: 300px;
 }
@@ -366,5 +382,25 @@ export default {
 
 .help-container {
     width: 300px;
+}
+
+.help-modal {
+    z-index: 2;
+}
+
+.help-modal-container {
+    border-color: black;
+    border-width: 2px 2px 0 2px;
+    background-color: white;
+    padding-top: 3px;
+    margin-left: 98px;
+}
+
+.help-modal-container-woman-selected {
+    border-color: black;
+    border-width: 2px 2px 0 2px;
+    background-color: white;
+    padding-top: 3px;
+    margin-left: 166.36px;
 }
 </style>
