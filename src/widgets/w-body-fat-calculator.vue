@@ -12,7 +12,7 @@
                 </div>
                 <div :class="['help-modal-container', 'flex', { 'help-modal-container-woman-selected': !this.isMale }]">
                     <h1 @click="showModal = true"><img class="w-8 h-8" src="../assets/incognito.png" /></h1>
-                    <MHelpModal class="help-modal" :visible="showModal" @close="showModal = false">
+                    <MHelpModal class="help-modal" :visible="showModal" @closeModal="showModal = false">
                     </MHelpModal>
                 </div>
             </div>
