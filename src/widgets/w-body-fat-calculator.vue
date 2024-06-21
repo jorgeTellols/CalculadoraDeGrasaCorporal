@@ -16,8 +16,7 @@
                     </MHelpModal>
                 </div>
             </div>
-            <div v-if="this.isMale"
-                class="calculator-container flex-row bg-white p-3 border-gray-600 border-2 relative">
+            <div v-if="this.isMale" class="calculator-container">
 
                 <div v-if="(this.placeHolderContent == 'cm')" class="input-fields w-full">
                     <CTextInput class="pb-2" labelContent="Altura" placeholderContent="cm" @change="setHeight" />
@@ -58,8 +57,7 @@
                     <CButton buttonType="submit" textContent="Calcular" @click="verificateData" />
                 </div>
             </div>
-            <div v-else-if="!this.isMale"
-                class="calculator-container flex-row bg-white p-3 border-gray-600 border-2 relative">
+            <div v-else-if="!this.isMale" class="calculator-container">
 
                 <div v-if="(this.placeHolderContent == 'cm')" class="input-fields">
                     <CTextInput class="pb-2" labelContent="Altura" :placeholderContent="this.placeHolderContent"
@@ -110,24 +108,21 @@
                 </div>
             </div>
         </form>
-        <div class="help-container flex-col justify-center align-middle">
-            <div v-if="!this.isBfCalculated && !this.isThereError"
-                class="result-container font-normal flex text-center justify-center align-middle mt-48">
-                <CLabel class="flex justify-center -ml-72 absolute" :spanContent="`🤔`" />
+        <div class="help-container">
+            <div v-if="!this.isBfCalculated && !this.isThereError" class="result-container">
+                <CLabel class="emoji-label -ml-72" :spanContent="`🤔`" />
                 <CLabel :spanContent="'Introduzca sus datos'" />
-                <CLabel class="flex justify-center -mr-72 absolute" :spanContent="`🤔`" />
+                <CLabel class="emoji-label ml-72" :spanContent="`🤔`" />
             </div>
-            <div v-else-if="this.isBfCalculated"
-                class="result-container font-normal flex text-center justify-center align-middle mt-48 relative">
-                <CLabel class="justify-center align-middle mt-4 -ml-80 absolute" :spanContent="`☝️🤓`" />
+            <div v-else-if="this.isBfCalculated" class="result-container">
+                <CLabel class="emoji-label -ml-80" :spanContent="`☝️🤓`" />
                 <CLabel :spanContent="`Su porcentaje de grasa corporal es: ${bfPercentage}`" optionalSymbol="%" />
-                <CLabel class="justify-center align-middle mt-4 -mr-80 absolute" :spanContent="`☝️🤓`" />
+                <CLabel class="emoji-label ml-80" :spanContent="`☝️🤓`" />
             </div>
-            <div v-else-if="this.isThereError"
-                class="result-container font-normal text-center flex justify-center align-middle mt-48">
-                <CLabel class="flex justify-center align-middle mt-4 -ml-80 absolute" :spanContent="`⛔`" />
+            <div v-else-if="this.isThereError" class="result-container">
+                <CLabel class="emoji-label -ml-80" :spanContent="`⛔`" />
                 <CLabel :spanContent="`${errorContent}`" />
-                <CLabel class="flex justify-center mt-4 -mr-80 absolute" :spanContent="`⛔`" />
+                <CLabel class="emoji-label ml-80" :spanContent="`⛔`" />
             </div>
         </div>
     </div>
@@ -376,6 +371,16 @@ export default {
     border-top-right-radius: 0%;
     z-index: 1;
     width: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    padding: 0.75rem;
+    border-color: #4B5563;
+    border-width: 2px;
+    border-style: solid;
+    position: relative;
 }
 
 .move-female-container {
@@ -384,6 +389,9 @@ export default {
 
 .help-container {
     width: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .help-modal {
@@ -406,4 +414,17 @@ export default {
     margin-left: 166.36px;
 }
 
+.result-container {
+    font-weight: normal;
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    margin-top: 12rem;
+}
+
+.emoji-label {
+    justify-content: center;
+    position: absolute;
+}
 </style>
