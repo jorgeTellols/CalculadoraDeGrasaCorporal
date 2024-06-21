@@ -1,5 +1,5 @@
 <template>
-    <transition class="modal-animation">
+    <transition name="modal">
         <div class="modal absolute" v-if="visible">
             <div class="modal-overlay" @click="closeModal"></div>
             <div class="modal-content">
@@ -73,6 +73,7 @@ export default {
     background-color: rgba(0, 0, 0, 0.5);
 }
 
+
 .modal-overlay {
     position: absolute;
     top: 0;
@@ -85,12 +86,11 @@ export default {
     position: relative;
     background: white;
     padding: 20px;
-    border-radius: 5px;
+    border-radius: 20px;
     z-index: 3;
     width: 50%;
     height: 50%;
-    overflow: scroll;
-    transition: cubic-bezier(0.6, 0.04, 0.98, 0.335)
+    overflow: auto;
 }
 
 .modal-close {
@@ -103,7 +103,13 @@ export default {
     cursor: pointer;
 }
 
-.modal-animation-enter-active {
-    transition: all 9s ease;
+.modal-enter-active,
+.modal-leave-active {
+    transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.modal-enter-from,
+.modal-leave-to {
+    opacity: 0;
 }
 </style>

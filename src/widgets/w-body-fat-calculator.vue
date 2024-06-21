@@ -1,5 +1,5 @@
 <template>
-    <div class="widget-container flex ">
+    <div class="widget-container flex">
         <form class="form-container relative flex-row mr-28">
             <div class="male-female-container flex">
                 <div class="male-container">
@@ -129,10 +129,6 @@
                 <CLabel :spanContent="`${errorContent}`" />
                 <CLabel class="flex justify-center mt-4 -mr-80 absolute" :spanContent="`⛔`" />
             </div>
-
-            <!-- <div class="image-container">
-                <img class="example-image border-2 border-black" src="../assets/man.jpg" />
-            </div> -->
         </div>
     </div>
 </template>
@@ -343,25 +339,31 @@ export default {
         handleClickMale() {
             this.isMale = true;
             this.isBfCalculated = false;
+            this.isThereError = false;
             this.cleanData();
         },
 
         handleClickFemale() {
             this.isMale = false;
             this.isBfCalculated = false;
+            this.isThereError = false;
             this.cleanData();
         },
 
         handleMetricRadio(e) {
             this.isMetricSelected = true;
             this.isImperialSelected = false;
+            this.isThereError = false;
             this.placeHolderContent = "cm"
+            this.cleanData();
         },
 
         handleImperialRadio(e) {
             this.isMetricSelected = false;
             this.isImperialSelected = true;
+            this.isThereError = false;
             this.placeHolderContent = "feet"
+            this.cleanData();
         },
     },
 }
@@ -403,4 +405,5 @@ export default {
     padding-top: 3px;
     margin-left: 166.36px;
 }
+
 </style>
