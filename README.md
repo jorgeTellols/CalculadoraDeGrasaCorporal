@@ -1,10 +1,10 @@
-# Calculadora de grasa corporal
+# Body Fat Calculator
 
-Pequeña aplicación que calcula el porcentaje de grasa corporal del usuario en base a una serie de datos. La aplicación admite tanto unidades métricas como imperiales (sistema anglosajón) y muestra una pequeña "guia" sobre como realizar las medidas a la vez que explica el método utilizado para el calculo del resultado final.
+Small application that calculates the user's body fat percentage based on introduced data. The application supports both metric and imperial units (Anglo-Saxon system) and shows a small "guide" on how to perform the measurements while explaining the method used for the calculation of the final result.
 
-Realicé esta pequeña aplicación por probar un poco el framework Vue.js y ver como funcionaba, por ello es solo una aplicación puramente "front" en tanto que no tiene base de datos ni ningún tipo de dimensión "back".
+I made this small application to test a little the Vue.js framework and see how it worked, so it is only a purely front application as it has no database or any kind of back dimension.
 
-## Tecnologias utilizadas
+## Technologies used
 
 - HTML5
 - CSS3
